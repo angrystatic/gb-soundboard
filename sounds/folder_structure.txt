@@ -1,0 +1,298 @@
+Directory Structure for: D:\RPG\Ghostbusters\GB Audio Soundboard
+==================================================
+
+📁 GB Audio Soundboard/
+    📁 Ambient SFX/
+        🎵 Ambient Gramophone Music Filtered.mp3
+        🎵 Ambient Tv Behind Door Loop 1.mp3
+        🎵 Ambient Tv Behind Door Loop 2.mp3
+        🎵 Ambient ticking clock.mp3
+        🎵 Ambient_Arcade Space Fighter Loop.mp3
+        🎵 Ambient_Chanting Drone Loop.mp3
+        🎵 Ambient_Music Box warble broken.mp3
+        🎵 Ambient_Thunder.mp3
+        🎵 Ambient_elevator_muzak_singing.mp3
+    📁 Call to Arms SFX/
+        🎵 Call_to_Arms_Ecto_1 Siren 30 sec.mp3
+        🎵 Call_to_Arms_Ecto_1 Siren 30 secs & Stop.mp3
+        🎵 Call_to_Arms_Ecto_1_Approach &_Stop.mp3
+        🎵 Call_to_Arms_Ecto_1_Siren Start & 30sec.mp3
+        🎵 Call_to_Arms_Ecto_1_Siren Start & Leave.mp3
+        🎵 Call_to_Arms_Firehouse_Alarm_Oneshot.mp3
+        🎵 Call_to_Arms_Old_Phone.mp3
+        🎵 Call_to_Arms_firealarm-with-ending.mp3
+        🎵 Call_to_Arms_ghostbusters_commercial-spook-spectre-ghost.mp3
+    📁 Combat & Containment SFX/
+        📁 Containment/
+            🎵 Contain_shutdown_with_short_alarm.mp3
+            🎵 Containment_Insert Trap Movie.mp3
+            🎵 Containment_Shutdown_Alarm_Movie.mp3
+            🎵 Containment_Trap Flush.mp3
+            🎵 Containment_thrumming_power_up.mp3
+        📁 Proton Pack/
+            🎵 Proton_Beam_Fire_Local_Grain_1.mp3
+            🎵 Proton_Beam_Fire_Local_Grain_2.mp3
+            🎵 Proton_Beam_Fire_Local_Grain_3.mp3
+            🎵 Proton_Beam_Fire_Local_Grain_5.mp3
+            🎵 Proton_Beam_Fire_Local_Grain_6.mp3
+            🎵 Proton_Beam_Fire_Local_Grain_7.mp3
+            🎵 Proton_Beam_Fire_Local_Grain_8.mp3
+            🎵 Proton_Beam_Fire_Local_Grain_9.mp3
+            🎵 Proton_Beam_Fire_Local_Start_Full_03.mp3
+            🎵 Proton_Beam_Fire_Local_Start_Full_04.mp3
+            🎵 Proton_Beam_Fire_Local_Start_Full_05.mp3
+            🎵 Proton_Beam_Fire_Stop_1.mp3
+            🎵 Proton_Beam_Fire_Stop_2.mp3
+            🎵 Proton_Beam_Fire_Stop_3.mp3
+            🎵 Proton_Beam_Fire_Stop_4.mp3
+            🎵 experimental_proton_pack_firing_crossing_uncrossing_streams.mp3
+            🎵 experimental_proton_pack_firing_long.mp3
+            🎵 experimental_proton_pack_full_power_on_long.mp3
+            🎵 experimental_proton_pack_startup_short.mp3
+            🎵 experimental_proton_pack_warble_power_on.mp3
+            🎵 proton-pack-overheat_shutdown.mp3
+            🎵 proton-pack-overheating-short.mp3
+            🎵 proton-pack-power-on.mp3
+            🎵 proton_beam_big.mp3
+            🎵 proton_beam_burst_power_down.mp3
+            🎵 proton_beam_fizzle_off_01.mp3
+            🎵 proton_beam_fizzle_off_02.mp3
+            🎵 proton_beam_long.mp3
+            🎵 proton_beam_rapid_off.mp3
+            🎵 proton_pack power up fade off.mp3
+            🎵 proton_pack_beam_on_higher_tone.mp3
+            🎵 proton_pack_beam_on_lower_tone.mp3
+            🎵 proton_pack_beam_overheat.mp3
+            🎵 proton_pack_power_on.mp3
+            🎵 proton_pack_power_on_to_off.mp3
+            🎵 proton_pack_powerup short.mp3
+            🎵 slime_pack_overheat vent fast.mp3
+        📁 Slime/
+            🎵 slimegun-splat-01.mp3
+            🎵 slimegun-splat-02.mp3
+        📁 Traps/
+            🎵 Traps_beepbeep-warning.mp3
+            🎵 Traps_closed_with_ghost_beeping.mp3
+            🎵 Traps_closing.mp3
+            🎵 Traps_giant_power_up_01.mp3
+            🎵 Traps_giant_power_up_02.mp3
+            🎵 Traps_giant_shutdown.mp3
+            🎵 Traps_just_beep_tones.mp3
+            🎵 Traps_overheat 3 beeps.mp3
+            🎵 Traps_overheat 7 beeps.mp3
+            🎵 Traps_sucking.mp3
+            🎵 Traps_with_capture-higher-pitch.mp3
+            🎵 Traps_with_capture.mp3
+    📁 Investigation SFX/
+        📁 Firehouse Computer/
+            🎵 environment-firehouse-computer.mp3
+        📁 Goggles/
+            🎵 proton_goggles-something-visible.mp3
+            🎵 proton_goggles_power_on.mp3
+        📁 PKE/
+            🎵 pke-found-something-chirp.mp3
+            🎵 pke-found-something-quick-chirp 2x.mp3
+    📁 Meta Game Music SFX/
+        🎵 Benny Spent.mp3
+        🎵 Disco Bellbottoms.mp3
+        🎵 Joker Dealt (Jackpot!).mp3
+        🎵 Quick Success.mp3
+        🎵 Triumph_Retro_80s.mp3
+        🎵 Wilhelm_Scream.mp3
+    📁 Moods Music/
+        📁 Big Reveal/
+            🎵 Music Big Reveal Hopeful.mp3
+            🎵 Music Big Reveal Horns Cymbals Big Reveal.mp3
+            🎵 Music Big Reveal Horns strings minor key 01.mp3
+            🎵 Music Big Reveal Horns timpany minor key 01.mp3
+            🎵 Music Big Reveal Horns timpany minor key 02.mp3
+            🎵 Music Big Reveal Horns timpany minor key 03.mp3
+            🎵 Music Big Reveal Horns to cymbals 01.mp3
+            🎵 Music Big Reveal Horns to cymbals 02.mp3
+            🎵 Music Big Reveal Horns to fade out.mp3
+            🎵 Music Big Reveal Horns to tinkling fade out.mp3
+            🎵 Music Big Reveal Spinning fast.mp3
+            🎵 Music Big Reveal to Tuba Walk to Slide Whistle.mp3
+            🎵 Music mild reveal to tuba walk.mp3
+        📁 Bureacratic Buzz/
+            🎵 Music Bureacratic Buzz Piano Wald to Tuba Walk.mp3
+            🎵 Music Bureacratic Buzz ondes marteno to tuba piano walk.mp3
+        📁 Chaotic Kenetic/
+            🎵 Music Chatoic Kinetic Fight Loop 01.mp3
+            🎵 Music Chatoic Kinetic Fight Loop 02.mp3
+            🎵 Music Chatoic Kinetic Fight Loop 03.mp3
+            🎵 Music Chatoic Kinetic Fight Loop 04.mp3
+            🎵 Music Chatoic Kinetic Fight Loop 05.mp3
+            🎵 Music Chatoic Kinetic Fight Loop 06.mp3
+            🎵 Music Chatoic Kinetic Fight Loop 07.mp3
+            🎵 Music Chatoic Kinetic Fight Loop 08.mp3
+            🎵 Music Chatoic Kinetic Fight short.mp3
+            🎵 Music Chatoic Kinetic brass boss fight Loop.mp3
+            🎵 Music Chatoic Kinetic brassy big ghostbusters fight Loop.mp3
+            🎵 Music Chatoic Kinetic brassy big hits fight loop.mp3
+            🎵 Music Chatoic Kinetic full orchestra fight loop.mp3
+            🎵 Music Chatoic Kinetic strings fight loop.mp3
+            🎵 Music Chatoic Kinetic tension building running 06.mp3
+            🎵 Music Chatoic Kinetic_drums_battle_loop_01.mp3
+            🎵 Music Chatoic Kinetic_drums_battle_loop_02.mp3
+            🎵 Music Chatoic Kinetic_staypuft_boss_theme.mp3
+            🎵 Music Ride of the Valkyries Loop.mp3
+        📁 Comedic Relief/
+            🎵 Music Comedi Relief cape fear tension relief.mp3
+            🎵 Music Comedic Relief Ambient Tuba Walk 04.mp3
+            🎵 Music Comedic Relief Elevator Musak Cheezy 70s.mp3
+            🎵 Music Comedic Relief Elevator Musak Loop.mp3
+            🎵 Music Comedic Relief Piano Tuba Walk very slow.mp3
+            🎵 Music Comedic Relief Sad horns.mp3
+            🎵 Music Comedic Relief Slow Tuba Walk 14.mp3
+            🎵 Music Comedic Relief Stinger 80s Funk.mp3
+            🎵 Music Comedic Relief Stinger Dana's Intro 02.mp3
+            🎵 Music Comedic Relief Stinger Dana's Intro.mp3
+            🎵 Music Comedic Relief Stinger Flute Walk.mp3
+            🎵 Music Comedic Relief Stinger Tuba Walk 02.mp3
+            🎵 Music Comedic Relief Stinger Tuba Walk.mp3
+            🎵 Music Comedic Relief Tuba Walk Short 04.mp3
+            🎵 Music Comedic Relief Tuba Walk Strings Short and fast.mp3
+            🎵 Music Comedic Relief Tuba Walk slow to piano.mp3
+            🎵 Music Comedic Relief Tuba Walk to Piano Walk.mp3
+            🎵 Music Comedic Relief Tuba Walk to ondes martenot.mp3
+            🎵 Music Comedic Relief Tuba Walk to ondes martenot_Spooky.mp3
+            🎵 Music Comedic Relief Tuba Walk to slow piano 2.mp3
+            🎵 Music Comedic Relief Tuba_Ghostbusters_firehouse_quick_march.mp3
+        📁 Creeping Dread Eerie/
+            🎵 Music Big Reveal to Creeping Dread woodwinds shimmer.mp3
+            🎵 Music Creaping Dread Strings Tension Building 01.mp3
+            🎵 Music Creeping Dread Elevator Musak tape broken.mp3
+            🎵 Music Creeping Dread Piano Walk Slow.mp3
+            🎵 Music Creeping Dread Piano Walk Tension Building 04.mp3
+            🎵 Music Creeping Dread Stinger 07.mp3
+            🎵 Music Creeping Dread Stinger 18.mp3
+            🎵 Music Creeping Dread Stinger 20.mp3
+            🎵 Music Creeping Dread Stinger 21.mp3
+            🎵 Music Creeping Dread Stinger 24.mp3
+            🎵 Music Creeping Dread Stinger 25.mp3
+            🎵 Music Creeping Dread Stinger 26.mp3
+            🎵 Music Creeping Dread Stinger 30.mp3
+            🎵 Music Creeping Dread Stinger 35.mp3
+            🎵 Music Creeping Dread Strings and Horns Cape Fear Style short.mp3
+            🎵 Music Creeping Dread Strings and Horns Cape Fear Style very short.mp3
+            🎵 Music Creeping Dread eerie to timpanies.mp3
+            🎵 Music Creeping Dread light horns timpany Tension Building 02.mp3
+            🎵 Music Creeping Dread low and slow woodwinds.mp3
+            🎵 Music Creeping Dread low slow woodwinds and strings.mp3
+            🎵 Music Creeping Dread ondes martenot Stings Tension Building 03.mp3
+            🎵 Music Creeping Dread ondes martenot.mp3
+            🎵 Music Creeping Dread strings timpany shimmer short.mp3
+            🎵 Music Creeping Dread strings timpany shimmer very short.mp3
+            🎵 Music Creeping Dread timpany shimmer Eerie 01.mp3
+            🎵 Music Creeping Dread timpany shimmer toondes martenot long.mp3
+            🎵 Music Creeping Dread timpany to string long play Eerie 02.mp3
+            🎵 Music Creeping Dread woodwinds low shimmer.mp3
+        📁 Egon Eureka/
+            🎵 Music Egon Eureka flutes.mp3
+            🎵 Music Egon Eurika flutes strings.mp3
+        📁 Occult Mystery/
+            🎵 Music Occult Mystery Brassy intro to flute twinkle.mp3
+            🎵 Music Occult Mystery Idle piano tinkle super long.mp3
+            🎵 Music Occult Mystery Tonal spooky Loop.mp3
+            🎵 Music Occult Mystery big brass intro to dreamland 4.mp3
+            🎵 Music Occult Mystery brass and woodwinds dreamland.mp3
+            🎵 Music Occult Mystery flutes to ondes marteno dreamland 2.mp3
+            🎵 Music Occult Mystery ondes marteno Eerie short.mp3
+            🎵 Music Occult Mystery ondes marteno short.mp3
+            🎵 Music Occult Mystery ondes marteno to stings long play.mp3
+            🎵 Music Occult Mystery ondes marteno to woodwinds long play.mp3
+            🎵 Music Occult Mystery ondes marteno twinkly strings.mp3
+            🎵 Music Occult Mystery ondes martenoIdle super long.mp3
+            🎵 Music Occult Mystery ondes martenot solo very short.mp3
+            🎵 Music Occult Mystery piano tinkle solo very short.mp3
+            🎵 Music Occult Mystery stings brass to ondes marteno long play.mp3
+            🎵 Music Occult Mystery stings woodwinds Eerie short.mp3
+            🎵 Music Occult Mystery string medium reveal.mp3
+            🎵 Music Occult Mystery strings and brass Shimmering Build to reveal.mp3
+            🎵 Music Occult Mystery strings to brass long.mp3
+            🎵 Music Occult Mystery strings to brass low.mp3
+            🎵 Music Occult Mystery strings to brass reveal short.mp3
+            🎵 Music Occult Mystery strings to ondes marteno long play.mp3
+            🎵 Music Occult Mystery strings to ondes marteno puzzles.mp3
+            🎵 Music Occult Mystery strings to woodwinds short.mp3
+            🎵 Music Occult Mystery woodwinds Building Dread.mp3
+            🎵 Music Occulty Mystery ondes marteno bells twinkle.mp3
+            🎵 Music Occulty Mystery ondes marteno full orchestra dreamland 3.mp3
+        📁 Sad/
+            🎵 Music Sad string and horns dirge.mp3
+        📁 Stingers/
+            🎵 Music Stinger 01.mp3
+            🎵 Music Stinger 02.mp3
+            🎵 Music Stinger 03.mp3
+            🎵 Music Stinger 04.mp3
+            🎵 Music Stinger 05.mp3
+            🎵 Music Stinger 06.mp3
+            🎵 Music Stinger 07.mp3
+            🎵 Music Stinger 08.mp3
+            🎵 Music Stinger 09.mp3
+            🎵 Music Stinger 10.mp3
+            🎵 Music Stinger 11.mp3
+            🎵 Music Stinger 12.mp3
+            🎵 Music Stinger 13.mp3
+            🎵 Music Stinger 14.mp3
+            🎵 Music Stinger 15.mp3
+            🎵 Music Stinger 16.mp3
+            🎵 Music Stinger 17.mp3
+            🎵 Music Stinger 18.mp3
+            🎵 Music Stinger 19.mp3
+            🎵 Music Stinger 20.mp3
+            🎵 Music Stinger 21.mp3
+            🎵 Music Stinger 22.mp3
+            🎵 Music Stinger 23.mp3
+            🎵 Music Stinger 24.mp3
+            🎵 Music Stinger 25.mp3
+            🎵 Music Stinger 26.mp3
+            🎵 Music Stinger 27.mp3
+            🎵 Music Stinger 28.mp3
+            🎵 Music Stinger 29.mp3
+            🎵 Music Stinger 30.mp3
+            🎵 Music Stinger 40.mp3
+            🎵 Music Stinger 41.mp3
+            🎵 Music Stinger 42.mp3
+            🎵 Music Stinger 43.mp3
+            🎵 Music Stinger 44.mp3
+            🎵 Music Stinger 45.mp3
+            🎵 Music Stinger 46.mp3
+            🎵 Music Stinger 47.mp3
+            🎵 Music Stinger 48.mp3
+            🎵 Music Stinger 49.mp3
+            🎵 Music Stinger 50.mp3
+            🎵 Music Stinger 51.mp3
+            🎵 Music Stinger 52.mp3
+            🎵 Music Stinger 53.mp3
+            🎵 Music Stinger 57.mp3
+            🎵 Music Stinger 58.mp3
+            🎵 Music Stinger 59.mp3
+            🎵 Music Stinger 60.mp3
+            🎵 Music Stinger 61.mp3
+            🎵 Music Stinger 62.mp3
+            🎵 Music Stinger 63.mp3
+            🎵 Music Stinger 64.mp3
+            🎵 Music Stinger 65.mp3
+            🎵 Music Stinger 66.mp3
+            🎵 Music Stinger Big brass and strings into Jaws.mp3
+            🎵 Music Stinger brass swelling reveal.mp3
+            🎵 Music Stinger fight intro 1.mp3
+            🎵 Music Stinger fight intro 2.mp3
+            🎵 Music Stinger horns Sustained Wahhs.mp3
+            🎵 Music Stinger horns reveal.mp3
+            🎵 Music Stinger tension building Venkman Down.mp3
+            🎵 Music Stinging brass ondes marteno to Jaws-ish.mp3
+        📁 Tense Focus/
+            🎵 Music Tense Focus Horns Cymbals Reveal to Suspense.mp3
+            🎵 Music Tense Focus Venkman Down.mp3
+            🎵 Music Tense Focus bees nest strings.mp3
+            🎵 Music Tense Focus detemined gallop Timpany and Horns.mp3
+            🎵 Music Tense Focus determined walk woodwinds.mp3
+            🎵 Music Tense Focus electronic low hopeful.mp3
+            🎵 Music Tense Focus pensive strings.mp3
+            🎵 Music Tense Focus pulsing suspense building Electro Tuba Walk.mp3
+            🎵 Music Tense Focus spooky building to triumph 06.mp3
+            🎵 Music Tense Focus tenative Tuba walk to piano.mp3
+            🎵 Music Tense Focus tiptoe horns.mp3

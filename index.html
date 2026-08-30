@@ -103,6 +103,17 @@
     .panel { display: none; }
     .panel.active { display: block; }
 
+    .subcategory-title {
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: var(--slime);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 14px 0 8px 0;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -124,7 +135,7 @@
       position: relative;
     }
     .tile:hover { background: #2a2a2e; border-color: #444; }
-    .tile-name { font-size: 0.75rem; font-weight: bold; }
+    .tile-name { font-size: 0.75rem; font-weight: bold; line-height: 1.25; }
     .tile-sub { font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; }
 
     .tile.playing {
@@ -133,31 +144,16 @@
     }
     .tile.playing .tile-name { color: var(--slime); }
 
-    .random-box {
-      text-align: center;
-      padding: 15px 0;
+    .loop-badge {
+      position: absolute;
+      top: 3px;
+      right: 4px;
+      font-size: 0.55rem;
+      color: var(--slime);
+      opacity: 0.8;
     }
-    .btn-giant {
-      background: var(--red);
-      color: #fff;
-      border: 2px solid #b91c1c;
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
-      font-size: 0.75rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      cursor: pointer;
-      margin: 0 auto 10px auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }
-    .btn-giant:hover { transform: scale(1.04); background: #ff2b34; }
-    .btn-giant span { font-size: 1.6rem; margin-bottom: 2px; }
-    .status { font-size: 0.8rem; color: var(--slime); font-weight: bold; min-height: 20px; }
+
+    .status { font-size: 0.8rem; color: var(--slime); font-weight: bold; min-height: 20px; text-align: center; margin-bottom: 10px; }
   </style>
 </head>
 <body>
@@ -174,213 +170,1205 @@
     </div>
   </div>
 
-  <div class="tabs">
-    <button class="tab-btn active" onclick="tab(event, 'tab-rand')">🎲 Random Pools</button>
-    <button class="tab-btn" onclick="tab(event, 'tab-arms')">📞 Call to Arms</button>
-    <button class="tab-btn" onclick="tab(event, 'tab-invest')">📟 Investigation</button>
-    <button class="tab-btn" onclick="tab(event, 'tab-combat')">⚡ Combat</button>
-    <button class="tab-btn" onclick="tab(event, 'tab-meta')">🎲 Meta Game</button>
-    <button class="tab-btn" onclick="tab(event, 'tab-moods')">🎭 Moods</button>
-  </div>
+  <div id="status" class="status">System operational — ready for hauntings</div>
 
-  <!-- Randomizer Pool Tab -->
-  <div id="tab-rand" class="panel active">
-    <div class="random-box">
-      <button class="btn-giant" onclick="playRandom('creepingDread')">
-        <span>⚡</span>Creeping<br>Dread
-      </button>
-      <div class="status" id="rand-status">Ready for action</div>
-    </div>
-    <div class="grid">
-      <div class="tile" onclick="playRandom('protonStream')">
-        <span class="tile-name">⚡ Fire Proton Stream</span>
-        <span class="tile-sub">Random Grain 1-9</span>
-      </div>
-      <div class="tile" onclick="playRandom('tubaWalk')">
-        <span class="tile-name">🎷 Comedic Fail</span>
-        <span class="tile-sub">Random Tuba Walk</span>
-      </div>
-      <div class="tile" onclick="playRandom('fightLoop')">
-        <span class="tile-name">⚔️ Combat Music</span>
-        <span class="tile-sub">Random Battle Theme</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Call to Arms Tab -->
-  <div id="tab-arms" class="panel">
-    <div class="grid">
-      <div class="tile" onclick="playFile(this, 'sounds/Call to Arms SFX/Call_to_Arms_firealarm-with-ending.mp3')">
-        <span class="tile-name">🚨 Firehouse Alarm</span>
-        <span class="tile-sub">Alarm</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Call to Arms SFX/Call_to_Arms_Ecto_1_Siren Start & 30sec.mp3')">
-        <span class="tile-name">🚨 Ecto-1 Siren Start</span>
-        <span class="tile-sub">30s Siren</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Call to Arms SFX/Call_to_Arms_Ecto_1_Approach &_Stop.mp3')">
-        <span class="tile-name">🚨 Ecto-1 Arrival</span>
-        <span class="tile-sub">Stop & Hiss</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Call to Arms SFX/Call_to_Arms_Old_Phone.mp3')">
-        <span class="tile-name">☎️ Dispatch Phone</span>
-        <span class="tile-sub">Ringer</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Call to Arms SFX/Call_to_Arms_ghostbusters_commercial-spook-spectre-ghost.mp3', true)">
-        <span class="tile-name">📺 Commercial Jingle</span>
-        <span class="tile-sub">TV/Radio Loop</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Investigation Tab -->
-  <div id="tab-invest" class="panel">
-    <div class="grid">
-      <div class="tile" onclick="playFile(this, 'sounds/Investigation SFX/PKE/pke-found-something-chirp.mp3')">
-        <span class="tile-name">📟 P.K.E. Target Scan</span>
-        <span class="tile-sub">Signal Found</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Investigation SFX/Goggles/proton_goggles_power_on.mp3')">
-        <span class="tile-name">🕶️ Goggles Power On</span>
-        <span class="tile-sub">Startup Whine</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Investigation SFX/Goggles/proton_goggles-something-visible.mp3')">
-        <span class="tile-name">🕶️ Goggles Entity Visible</span>
-        <span class="tile-sub">Focus Click</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Investigation SFX/Firehouse Computer/environment-firehouse-computer.mp3', true)">
-        <span class="tile-name">🖥️ Firehouse Computer</span>
-        <span class="tile-sub">Data Hum Loop</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Combat Tab -->
-  <div id="tab-combat" class="panel">
-    <div class="grid">
-      <div class="tile" onclick="playFile(this, 'sounds/Combat & Containment SFX/Proton Pack/proton-pack-power-on.mp3')">
-        <span class="tile-name">🎒 Pack Power On</span>
-        <span class="tile-sub">Startup</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Combat & Containment SFX/Proton Pack/proton-pack-overheat_shutdown.mp3')">
-        <span class="tile-name">🎒 Pack Overheat</span>
-        <span class="tile-sub">Vent Steam</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Combat & Containment SFX/Traps/Traps_sucking.mp3', true)">
-        <span class="tile-name">🌀 Suction Vortex</span>
-        <span class="tile-sub">Pulling Loop</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Combat & Containment SFX/Traps/Traps_with_capture.mp3')">
-        <span class="tile-name">🔒 Trap Snap</span>
-        <span class="tile-sub">Captured!</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Combat & Containment SFX/Traps/Traps_beepbeep-warning.mp3', true)">
-        <span class="tile-name">🏺 Trap Beep Warning</span>
-        <span class="tile-sub">Full Warning</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Combat & Containment SFX/Slime/slimegun-splat-01.mp3')">
-        <span class="tile-name">🧪 Slime Splat</span>
-        <span class="tile-sub">Squelch</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Combat & Containment SFX/Containment/Containment_thrumming_power_up.mp3', true)">
-        <span class="tile-name">🔋 Containment Grid</span>
-        <span class="tile-sub">Thrumming Loop</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Combat & Containment SFX/Containment/Contain_shutdown_with_short_alarm.mp3')">
-        <span class="tile-name">💥 Vault Shutdown</span>
-        <span class="tile-sub">Alarm</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Meta Game Tab -->
-  <div id="tab-meta" class="panel">
-    <div class="grid">
-      <div class="tile" onclick="playFile(this, 'sounds/Meta Game Music SFX/Joker Dealt (Jackpot!).mp3')">
-        <span class="tile-name">🎰 Joker Jackpot</span>
-        <span class="tile-sub">Wild Card</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Meta Game Music SFX/Benny Spent.mp3')">
-        <span class="tile-name">💎 Benny Spend</span>
-        <span class="tile-sub">Reroll</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Meta Game Music SFX/Wilhelm_Scream.mp3')">
-        <span class="tile-name">😱 Wilhelm Scream</span>
-        <span class="tile-sub">Classic SFX</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Meta Game Music SFX/Triumph_Retro_80s.mp3')">
-        <span class="tile-name">🏆 80s Triumph</span>
-        <span class="tile-sub">Victory</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Moods Tab -->
-  <div id="tab-moods" class="panel">
-    <div class="grid">
-      <div class="tile" onclick="playFile(this, 'sounds/Moods Music/Egon Eureka/Music Egon Eureka flutes.mp3')">
-        <span class="tile-name">💡 Egon's Eureka</span>
-        <span class="tile-sub">Breakthrough</span>
-      </div>
-      <div class="tile" onclick="playFile(this, 'sounds/Moods Music/Bureacritic Buzz/Music Bureacritic Buzz Piano Wald to Tuba Walk.mp3', true)">
-        <span class="tile-name">🐝 Walter Peck Buzz</span>
-        <span class="tile-sub">Bureaucracy</span>
-      </div>
-      <div class="tile" onclick="playRandom('fightLoop')">
-        <span class="tile-name">⚔️ Chaotic Battle</span>
-        <span class="tile-sub">Random Battle Theme</span>
-      </div>
-      <div class="tile" onclick="playRandom('tubaWalk')">
-        <span class="tile-name">🎷 Tuba Walk</span>
-        <span class="tile-sub">Comedic Blunder</span>
-      </div>
-    </div>
-  </div>
+  <div class="tabs" id="tabContainer"></div>
+  <div id="panelContainer"></div>
 
   <script>
+    const SOUND_DATABASE = {
+  "randomPools": {
+    "title": "\ud83c\udfb2 Random Pools",
+    "subcategories": [
+      {
+        "name": "\u26a1 Featured Randomizer Pools",
+        "items": [
+          {
+            "name": "\u26a1 Symphonic Stingers",
+            "sub": "50+ Orchestral Stingers",
+            "pool": [
+              "sounds/Moods Music/Stingers/Music Stinger 01.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 02.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 03.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 04.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 05.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 06.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 07.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 08.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 09.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 10.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 11.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 12.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 13.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 14.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 15.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 16.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 17.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 18.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 19.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 20.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 21.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 22.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 23.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 24.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 25.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 26.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 27.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 28.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 29.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 30.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 40.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 41.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 42.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 43.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 44.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 45.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 46.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 47.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 48.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 49.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 50.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 51.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 52.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 53.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 57.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 58.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 59.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 60.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 61.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 62.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 63.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 64.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 65.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 66.mp3"
+            ]
+          },
+          {
+            "name": "\u26a1 Fire Proton Stream",
+            "sub": "Grain Variations 1-9",
+            "pool": [
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_1.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_2.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_3.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_5.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_6.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_7.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_8.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_9.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udf92 Beam Fire Cutoff",
+            "sub": "Stop Variations 1-4",
+            "pool": [
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Stop_1.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Stop_2.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Stop_3.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Stop_4.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udffa Giant Trap Power Up",
+            "sub": "Variations 01-02",
+            "pool": [
+              "sounds/Combat & Containment SFX/Traps/Traps_giant_power_up_01.mp3",
+              "sounds/Combat & Containment SFX/Traps/Traps_giant_power_up_02.mp3"
+            ]
+          },
+          {
+            "name": "\ud83e\uddea Slime Splat",
+            "sub": "Squelch 01-02",
+            "pool": [
+              "sounds/Combat & Containment SFX/Slime/slimegun-splat-01.mp3",
+              "sounds/Combat & Containment SFX/Slime/slimegun-splat-02.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udfb7 Comedic Tuba Walk",
+            "sub": "Blunder Variations",
+            "pool": [
+              "sounds/Moods Music/Comedic Relief/Music Comedic Relief Slow Tuba Walk 14.mp3",
+              "sounds/Moods Music/Comedic Relief/Music Comedic Relief Stinger Tuba Walk 02.mp3",
+              "sounds/Moods Music/Comedic Relief/Music Comedic Relief Tuba Walk Strings Short and fast.mp3",
+              "sounds/Moods Music/Comedic Relief/Music Comedic Relief Ambient Tuba Walk 04.mp3",
+              "sounds/Moods Music/Comedic Relief/Music Comedic Relief Piano Tuba Walk very slow.mp3",
+              "sounds/Moods Music/Comedic Relief/Music Comedic Relief Tuba Walk Short 04.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udfba Big Entity Reveal",
+            "sub": "Horns & Timpani 01-03",
+            "pool": [
+              "sounds/Moods Music/Big Reveal/Music Big Reveal Horns timpany minor key 01.mp3",
+              "sounds/Moods Music/Big Reveal/Music Big Reveal Horns timpany minor key 02.mp3",
+              "sounds/Moods Music/Big Reveal/Music Big Reveal Horns timpany minor key 03.mp3",
+              "sounds/Moods Music/Big Reveal/Music Big Reveal Horns to cymbals 01.mp3",
+              "sounds/Moods Music/Big Reveal/Music Big Reveal Horns to cymbals 02.mp3"
+            ]
+          },
+          {
+            "name": "\u2694\ufe0f Chaotic Battle Loop",
+            "sub": "Fight Loops 01-08",
+            "pool": [
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 01.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 02.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 03.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 04.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 05.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 06.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 07.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 08.mp3"
+            ]
+          },
+          {
+            "name": "\ud83e\udd41 Battle Drums Loop",
+            "sub": "Drum Loops 01-02",
+            "pool": [
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic_drums_battle_loop_01.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic_drums_battle_loop_02.mp3"
+            ]
+          },
+          {
+            "name": "\ud83d\udc41\ufe0f Creeping Dread Tension",
+            "sub": "Tension Building Sets",
+            "pool": [
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creaping Dread Strings Tension Building 01.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread light horns timpany Tension Building 02.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread ondes martenot Stings Tension Building 03.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Piano Walk Tension Building 04.mp3"
+            ]
+          },
+          {
+            "name": "\ud83d\udcfa TV Behind Door",
+            "sub": "Ambient Loops 1-2",
+            "pool": [
+              "sounds/Ambient SFX/Ambient Tv Behind Door Loop 1.mp3",
+              "sounds/Ambient SFX/Ambient Tv Behind Door Loop 2.mp3"
+            ]
+          },
+          {
+            "name": "\ud83d\udca1 Egon's Eureka",
+            "sub": "Flutes & Strings 01-02",
+            "pool": [
+              "sounds/Moods Music/Egon Eureka/Music Egon Eureka flutes.mp3",
+              "sounds/Moods Music/Egon Eureka/Music Egon Eurika flutes strings.mp3"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ambient": {
+    "title": "\ud83d\udd0a Ambient SFX",
+    "subcategories": [
+      {
+        "name": "\ud83d\udcc1 Ambient Environments",
+        "items": [
+          {
+            "name": "\ud83d\udcfb Gramophone Filtered",
+            "file": "sounds/Ambient SFX/Ambient Gramophone Music Filtered.mp3"
+          },
+          {
+            "name": "\ud83d\udcfa TV Behind Door Pool",
+            "sub": "Random 1-2",
+            "pool": [
+              "sounds/Ambient SFX/Ambient Tv Behind Door Loop 1.mp3",
+              "sounds/Ambient SFX/Ambient Tv Behind Door Loop 2.mp3"
+            ]
+          },
+          {
+            "name": "\u23f1\ufe0f Ticking Clock",
+            "file": "sounds/Ambient SFX/Ambient ticking clock.mp3"
+          },
+          {
+            "name": "\ud83d\udd79\ufe0f Arcade Space Fighter",
+            "file": "sounds/Ambient SFX/Ambient_Arcade Space Fighter Loop.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83d\udd2e Chanting Drone",
+            "file": "sounds/Ambient SFX/Ambient_Chanting Drone Loop.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83c\udfb5 Broken Music Box",
+            "file": "sounds/Ambient SFX/Ambient_Music Box warble broken.mp3"
+          },
+          {
+            "name": "\u26a1 Thunder Clap",
+            "file": "sounds/Ambient SFX/Ambient_Thunder.mp3"
+          },
+          {
+            "name": "\ud83c\udfb5 Elevator Muzak Singing",
+            "file": "sounds/Ambient SFX/Ambient_elevator_muzak_singing.mp3",
+            "loop": true
+          }
+        ]
+      }
+    ]
+  },
+  "callToArms": {
+    "title": "\ud83d\udcde Call to Arms SFX",
+    "subcategories": [
+      {
+        "name": "\ud83d\udcc1 Sirens & Dispatch Alarms",
+        "items": [
+          {
+            "name": "\ud83d\udea8 Ecto-1 Siren 30s",
+            "file": "sounds/Call to Arms SFX/Call_to_Arms_Ecto_1 Siren 30 sec.mp3"
+          },
+          {
+            "name": "\ud83d\udea8 Ecto-1 Siren & Stop",
+            "file": "sounds/Call to Arms SFX/Call_to_Arms_Ecto_1 Siren 30 secs & Stop.mp3"
+          },
+          {
+            "name": "\ud83d\udea8 Ecto-1 Approach & Stop",
+            "file": "sounds/Call to Arms SFX/Call_to_Arms_Ecto_1_Approach &_Stop.mp3"
+          },
+          {
+            "name": "\ud83d\udea8 Ecto-1 Siren Start 30s",
+            "file": "sounds/Call to Arms SFX/Call_to_Arms_Ecto_1_Siren Start & 30sec.mp3"
+          },
+          {
+            "name": "\ud83d\udea8 Ecto-1 Siren Start & Leave",
+            "file": "sounds/Call to Arms SFX/Call_to_Arms_Ecto_1_Siren Start & Leave.mp3"
+          },
+          {
+            "name": "\ud83d\udea8 Firehouse Alarm Oneshot",
+            "file": "sounds/Call to Arms SFX/Call_to_Arms_Firehouse_Alarm_Oneshot.mp3"
+          },
+          {
+            "name": "\u260e\ufe0f Dispatch Old Phone",
+            "file": "sounds/Call to Arms SFX/Call_to_Arms_Old_Phone.mp3"
+          },
+          {
+            "name": "\ud83d\udea8 Fire Alarm Ending",
+            "file": "sounds/Call to Arms SFX/Call_to_Arms_firealarm-with-ending.mp3"
+          },
+          {
+            "name": "\ud83d\udcfa TV Commercial Jingle",
+            "file": "sounds/Call to Arms SFX/Call_to_Arms_ghostbusters_commercial-spook-spectre-ghost.mp3",
+            "loop": true
+          }
+        ]
+      }
+    ]
+  },
+  "investigation": {
+    "title": "\ud83d\udcdf Investigation SFX",
+    "subcategories": [
+      {
+        "name": "\ud83d\udcc1 Firehouse Computer",
+        "items": [
+          {
+            "name": "\ud83d\udda5\ufe0f Firehouse Computer",
+            "file": "sounds/Investigation SFX/Firehouse Computer/environment-firehouse-computer.mp3",
+            "loop": true
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Ecto Goggles",
+        "items": [
+          {
+            "name": "\ud83d\udd76\ufe0f Goggles Power On",
+            "file": "sounds/Investigation SFX/Goggles/proton_goggles_power_on.mp3"
+          },
+          {
+            "name": "\ud83d\udd76\ufe0f Something Visible Focus",
+            "file": "sounds/Investigation SFX/Goggles/proton_goggles-something-visible.mp3"
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 P.K.E. Meter",
+        "items": [
+          {
+            "name": "\ud83d\udcdf P.K.E. Found Something",
+            "file": "sounds/Investigation SFX/PKE/pke-found-something-chirp.mp3"
+          },
+          {
+            "name": "\ud83d\udcdf P.K.E. Quick Chirp 2x",
+            "file": "sounds/Investigation SFX/PKE/pke-found-something-quick-chirp 2x.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  "combat": {
+    "title": "\u26a1 Combat & Containment SFX",
+    "subcategories": [
+      {
+        "name": "\ud83d\udcc1 Proton Pack & Neutrona Stream",
+        "items": [
+          {
+            "name": "\u26a1 Proton Stream Grain Pool",
+            "sub": "Random Grain 1-9",
+            "pool": [
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_1.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_2.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_3.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_5.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_6.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_7.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_8.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_9.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udf92 Beam Start Full Pool",
+            "sub": "Random 03-05",
+            "pool": [
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Start_Full_03.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Start_Full_04.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Start_Full_05.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udf92 Beam Fire Stop Pool",
+            "sub": "Random 1-4",
+            "pool": [
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Stop_1.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Stop_2.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Stop_3.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Stop_4.mp3"
+            ]
+          },
+          {
+            "name": "\u26a1 Crossing Streams",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/experimental_proton_pack_firing_crossing_uncrossing_streams.mp3"
+          },
+          {
+            "name": "\u26a1 Firing Stream Long",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/experimental_proton_pack_firing_long.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83c\udf92 Full Power On Long",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/experimental_proton_pack_full_power_on_long.mp3"
+          },
+          {
+            "name": "\ud83c\udf92 Startup Short",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/experimental_proton_pack_startup_short.mp3"
+          },
+          {
+            "name": "\ud83c\udf92 Warble Power On",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/experimental_proton_pack_warble_power_on.mp3"
+          },
+          {
+            "name": "\ud83c\udf92 Overheat Shutdown",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton-pack-overheat_shutdown.mp3"
+          },
+          {
+            "name": "\ud83c\udf92 Overheating Short",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton-pack-overheating-short.mp3"
+          },
+          {
+            "name": "\ud83c\udf92 Power On Standard",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton-pack-power-on.mp3"
+          },
+          {
+            "name": "\u26a1 Big Beam",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton_beam_big.mp3"
+          },
+          {
+            "name": "\u26a1 Burst Power Down",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton_beam_burst_power_down.mp3"
+          },
+          {
+            "name": "\u26a1 Beam Fizzle Off Pool",
+            "sub": "Random 01-02",
+            "pool": [
+              "sounds/Combat & Containment SFX/Proton Pack/proton_beam_fizzle_off_01.mp3",
+              "sounds/Combat & Containment SFX/Proton Pack/proton_beam_fizzle_off_02.mp3"
+            ]
+          },
+          {
+            "name": "\u26a1 Beam Long",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton_beam_long.mp3",
+            "loop": true
+          },
+          {
+            "name": "\u26a1 Beam Rapid Off",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton_beam_rapid_off.mp3"
+          },
+          {
+            "name": "\ud83c\udf92 Power Up Fade Off",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton_pack power up fade off.mp3"
+          },
+          {
+            "name": "\u26a1 Beam Higher Tone",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton_pack_beam_on_higher_tone.mp3"
+          },
+          {
+            "name": "\u26a1 Beam Lower Tone",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton_pack_beam_on_lower_tone.mp3"
+          },
+          {
+            "name": "\ud83c\udf92 Pack Overheat Vent",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton_pack_beam_overheat.mp3"
+          },
+          {
+            "name": "\ud83c\udf92 Pack Power On / Off",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton_pack_power_on_to_off.mp3"
+          },
+          {
+            "name": "\ud83c\udf92 Powerup Short",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/proton_pack_powerup short.mp3"
+          },
+          {
+            "name": "\ud83e\uddea Slime Pack Overheat",
+            "file": "sounds/Combat & Containment SFX/Proton Pack/slime_pack_overheat vent fast.mp3"
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Muon Ghost Traps",
+        "items": [
+          {
+            "name": "\ud83c\udffa Trap Beep Warning",
+            "file": "sounds/Combat & Containment SFX/Traps/Traps_beepbeep-warning.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83c\udffa Trap Closed Beeping",
+            "file": "sounds/Combat & Containment SFX/Traps/Traps_closed_with_ghost_beeping.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83c\udffa Trap Closing",
+            "file": "sounds/Combat & Containment SFX/Traps/Traps_closing.mp3"
+          },
+          {
+            "name": "\ud83c\udffa Giant Power Up Pool",
+            "sub": "Random 01-02",
+            "pool": [
+              "sounds/Combat & Containment SFX/Traps/Traps_giant_power_up_01.mp3",
+              "sounds/Combat & Containment SFX/Traps/Traps_giant_power_up_02.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udffa Giant Trap Shutdown",
+            "file": "sounds/Combat & Containment SFX/Traps/Traps_giant_shutdown.mp3"
+          },
+          {
+            "name": "\ud83c\udffa Just Beep Tones",
+            "file": "sounds/Combat & Containment SFX/Traps/Traps_just_beep_tones.mp3"
+          },
+          {
+            "name": "\ud83c\udffa Overheat 3 Beeps",
+            "file": "sounds/Combat & Containment SFX/Traps/Traps_overheat 3 beeps.mp3"
+          },
+          {
+            "name": "\ud83c\udffa Overheat 7 Beeps",
+            "file": "sounds/Combat & Containment SFX/Traps/Traps_overheat 7 beeps.mp3"
+          },
+          {
+            "name": "\ud83c\udf00 Suction Vortex Loop",
+            "file": "sounds/Combat & Containment SFX/Traps/Traps_sucking.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83d\udd12 Trap Capture (Higher Pitch)",
+            "file": "sounds/Combat & Containment SFX/Traps/Traps_with_capture-higher-pitch.mp3"
+          },
+          {
+            "name": "\ud83d\udd12 Trap Capture Standard",
+            "file": "sounds/Combat & Containment SFX/Traps/Traps_with_capture.mp3"
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Slime Blower",
+        "items": [
+          {
+            "name": "\ud83e\uddea Slime Splat Pool",
+            "sub": "Squelch 01-02",
+            "pool": [
+              "sounds/Combat & Containment SFX/Slime/slimegun-splat-01.mp3",
+              "sounds/Combat & Containment SFX/Slime/slimegun-splat-02.mp3"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Containment Vault",
+        "items": [
+          {
+            "name": "\ud83d\udca5 Shutdown Short Alarm",
+            "file": "sounds/Combat & Containment SFX/Containment/Contain_shutdown_with_short_alarm.mp3"
+          },
+          {
+            "name": "\ud83c\udffa Insert Trap (Movie)",
+            "file": "sounds/Combat & Containment SFX/Containment/Containment_Insert Trap Movie.mp3"
+          },
+          {
+            "name": "\ud83d\udca5 Shutdown Alarm (Movie)",
+            "file": "sounds/Combat & Containment SFX/Containment/Containment_Shutdown_Alarm_Movie.mp3"
+          },
+          {
+            "name": "\ud83c\udffa Trap Flush",
+            "file": "sounds/Combat & Containment SFX/Containment/Containment_Trap Flush.mp3"
+          },
+          {
+            "name": "\ud83d\udd0b Thrumming Power Up",
+            "file": "sounds/Combat & Containment SFX/Containment/Containment_thrumming_power_up.mp3",
+            "loop": true
+          }
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "title": "\ud83c\udfb2 Meta Game SFX",
+    "subcategories": [
+      {
+        "name": "\ud83d\udcc1 Game Mechanics & Stingers",
+        "items": [
+          {
+            "name": "\ud83d\udc8e Benny Spent",
+            "file": "sounds/Meta Game Music SFX/Benny Spent.mp3"
+          },
+          {
+            "name": "\ud83d\udd14 Disco Bellbottoms",
+            "file": "sounds/Meta Game Music SFX/Disco Bellbottoms.mp3"
+          },
+          {
+            "name": "\ud83c\udfb0 Joker Dealt (Jackpot!)",
+            "file": "sounds/Meta Game Music SFX/Joker Dealt (Jackpot!).mp3"
+          },
+          {
+            "name": "\u26a1 Quick Success",
+            "file": "sounds/Meta Game Music SFX/Quick Success.mp3"
+          },
+          {
+            "name": "\ud83c\udfc6 80s Victory Triumph",
+            "file": "sounds/Meta Game Music SFX/Triumph_Retro_80s.mp3"
+          },
+          {
+            "name": "\ud83d\ude31 Wilhelm Scream",
+            "file": "sounds/Meta Game Music SFX/Wilhelm_Scream.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  "moods": {
+    "title": "\ud83c\udfad Moods & Scores",
+    "subcategories": [
+      {
+        "name": "\ud83d\udcc1 Big Reveal",
+        "items": [
+          {
+            "name": "\ud83c\udfba Big Reveal Hopeful",
+            "file": "sounds/Moods Music/Big Reveal/Music Big Reveal Hopeful.mp3"
+          },
+          {
+            "name": "\ud83c\udfba Horns & Cymbals Reveal",
+            "file": "sounds/Moods Music/Big Reveal/Music Big Reveal Horns Cymbals Big Reveal.mp3"
+          },
+          {
+            "name": "\ud83c\udfba Horns & Strings Minor 01",
+            "file": "sounds/Moods Music/Big Reveal/Music Big Reveal Horns strings minor key 01.mp3"
+          },
+          {
+            "name": "\ud83c\udfba Reveal Horns & Timpani Pool",
+            "sub": "Minor Key 01-03",
+            "pool": [
+              "sounds/Moods Music/Big Reveal/Music Big Reveal Horns timpany minor key 01.mp3",
+              "sounds/Moods Music/Big Reveal/Music Big Reveal Horns timpany minor key 02.mp3",
+              "sounds/Moods Music/Big Reveal/Music Big Reveal Horns timpany minor key 03.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udfba Horns to Cymbals Pool",
+            "sub": "Random 01-02",
+            "pool": [
+              "sounds/Moods Music/Big Reveal/Music Big Reveal Horns to cymbals 01.mp3",
+              "sounds/Moods Music/Big Reveal/Music Big Reveal Horns to cymbals 02.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udfba Horns to Fade Out",
+            "file": "sounds/Moods Music/Big Reveal/Music Big Reveal Horns to fade out.mp3"
+          },
+          {
+            "name": "\ud83c\udfba Horns Tinkling Fade",
+            "file": "sounds/Moods Music/Big Reveal/Music Big Reveal Horns to tinkling fade out.mp3"
+          },
+          {
+            "name": "\ud83c\udfba Spinning Fast Reveal",
+            "file": "sounds/Moods Music/Big Reveal/Music Big Reveal Spinning fast.mp3"
+          },
+          {
+            "name": "\ud83c\udfb7 Reveal to Tuba & Slide Whistle",
+            "file": "sounds/Moods Music/Big Reveal/Music Big Reveal to Tuba Walk to Slide Whistle.mp3"
+          },
+          {
+            "name": "\ud83c\udfb7 Mild Reveal to Tuba Walk",
+            "file": "sounds/Moods Music/Big Reveal/Music mild reveal to tuba walk.mp3"
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Bureaucratic Buzz",
+        "items": [
+          {
+            "name": "\ud83d\udc1d Walter Peck Piano to Tuba",
+            "file": "sounds/Moods Music/Bureacritic Buzz/Music Bureacritic Buzz Piano Wald to Tuba Walk.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83d\udc1d Walter Peck Ondes Marteno",
+            "file": "sounds/Moods Music/Bureacritic Buzz/Music Bureacritic Buzz ondes marteno to tuba piano walk.mp3",
+            "loop": true
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Chaotic Kinetic (Combat)",
+        "items": [
+          {
+            "name": "\u2694\ufe0f Fight Loops Pool",
+            "sub": "Random 01-08",
+            "pool": [
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 01.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 02.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 03.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 04.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 05.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 06.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 07.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 08.mp3"
+            ]
+          },
+          {
+            "name": "\u2694\ufe0f Fight Short",
+            "file": "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight short.mp3"
+          },
+          {
+            "name": "\u2694\ufe0f Brass Boss Fight Loop",
+            "file": "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic brass boss fight Loop.mp3",
+            "loop": true
+          },
+          {
+            "name": "\u2694\ufe0f Brassy Big Ghostbusters Fight",
+            "file": "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic brassy big ghostbusters fight Loop.mp3",
+            "loop": true
+          },
+          {
+            "name": "\u2694\ufe0f Brassy Big Hits Loop",
+            "file": "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic brassy big hits fight loop.mp3",
+            "loop": true
+          },
+          {
+            "name": "\u2694\ufe0f Full Orchestra Fight",
+            "file": "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic full orchestra fight loop.mp3",
+            "loop": true
+          },
+          {
+            "name": "\u2694\ufe0f Strings Fight Loop",
+            "file": "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic strings fight loop.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83c\udfc3 Tension Building Running 06",
+            "file": "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic tension building running 06.mp3"
+          },
+          {
+            "name": "\ud83e\udd41 Battle Drums Loop Pool",
+            "sub": "Random 01-02",
+            "pool": [
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic_drums_battle_loop_01.mp3",
+              "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic_drums_battle_loop_02.mp3"
+            ]
+          },
+          {
+            "name": "\ud83d\udc51 Stay Puft Boss Theme",
+            "file": "sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic_staypuft_boss_theme.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83d\udc0e Ride of the Valkyries",
+            "file": "sounds/Moods Music/Chaotic Kenetic/Music Ride of the Valkyries Loop.mp3",
+            "loop": true
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Comedic Relief",
+        "items": [
+          {
+            "name": "\ud83c\udfb7 Cape Fear Relief",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedi Relief cape fear tension relief.mp3"
+          },
+          {
+            "name": "\ud83c\udfb7 Ambient Tuba Walk 04",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Ambient Tuba Walk 04.mp3"
+          },
+          {
+            "name": "\ud83d\udcfa Elevator Muzak Cheezy 70s",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Elevator Musak Cheezy 70s.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83d\udcfa Elevator Muzak Loop",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Elevator Musak Loop.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83c\udfb9 Piano Tuba Walk Slow",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Piano Tuba Walk very slow.mp3"
+          },
+          {
+            "name": "\ud83d\udcef Sad Horns Blunder",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Sad horns.mp3"
+          },
+          {
+            "name": "\ud83c\udfb7 Slow Tuba Walk 14",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Slow Tuba Walk 14.mp3"
+          },
+          {
+            "name": "\ud83c\udfb8 80s Funk Stinger",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Stinger 80s Funk.mp3"
+          },
+          {
+            "name": "\ud83d\udc83 Dana's Intro Stinger Pool",
+            "sub": "Random 01-02",
+            "pool": [
+              "sounds/Moods Music/Comedic Relief/Music Comedic Relief Stinger Dana's Intro.mp3",
+              "sounds/Moods Music/Comedic Relief/Music Comedic Relief Stinger Dana's Intro 02.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udfbc Flute Walk Stinger",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Stinger Flute Walk.mp3"
+          },
+          {
+            "name": "\ud83c\udfb7 Tuba Walk Stinger Pool",
+            "sub": "Random 01-02",
+            "pool": [
+              "sounds/Moods Music/Comedic Relief/Music Comedic Relief Stinger Tuba Walk.mp3",
+              "sounds/Moods Music/Comedic Relief/Music Comedic Relief Stinger Tuba Walk 02.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udfb7 Tuba Walk Short 04",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Tuba Walk Short 04.mp3"
+          },
+          {
+            "name": "\ud83c\udfbb Tuba Walk Strings Fast",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Tuba Walk Strings Short and fast.mp3"
+          },
+          {
+            "name": "\ud83c\udfb9 Tuba Walk Slow to Piano",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Tuba Walk slow to piano.mp3"
+          },
+          {
+            "name": "\ud83c\udfb9 Tuba Walk to Piano Walk",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Tuba Walk to Piano Walk.mp3"
+          },
+          {
+            "name": "\ud83c\udfb9 Tuba Walk to Ondes Martenot",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Tuba Walk to ondes martenot.mp3"
+          },
+          {
+            "name": "\ud83d\udc7b Tuba Walk to Ondes Spooky",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Tuba Walk to ondes martenot_Spooky.mp3"
+          },
+          {
+            "name": "\ud83c\udfb9 Tuba Walk to Slow Piano 2",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Tuba Walk to slow piano 2.mp3"
+          },
+          {
+            "name": "\ud83c\udfba Firehouse Quick March",
+            "file": "sounds/Moods Music/Comedic Relief/Music Comedic Relief Tuba_Ghostbusters_firehouse_quick_march.mp3"
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Creeping Dread & Eerie",
+        "items": [
+          {
+            "name": "\ud83d\udc41\ufe0f Reveal to Creeping Shimmer",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Big Reveal to Creeping Dread woodwinds shimmer.mp3"
+          },
+          {
+            "name": "\ud83d\udc41\ufe0f Tension Building Set",
+            "sub": "Random 01-04",
+            "pool": [
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creaping Dread Strings Tension Building 01.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread light horns timpany Tension Building 02.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread ondes martenot Stings Tension Building 03.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Piano Walk Tension Building 04.mp3"
+            ]
+          },
+          {
+            "name": "\ud83d\udcfa Muzak Tape Broken",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Elevator Musak tape broken.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83c\udfb9 Piano Walk Slow",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Piano Walk Slow.mp3"
+          },
+          {
+            "name": "\u26a1 Creeping Dread Stingers Pool",
+            "sub": "Random Stingers",
+            "pool": [
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Stinger 07.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Stinger 18.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Stinger 20.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Stinger 21.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Stinger 24.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Stinger 25.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Stinger 26.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Stinger 30.mp3",
+              "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Stinger 35.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udfbb Cape Fear Strings & Horns",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Strings and Horns Cape Fear Style short.mp3"
+          },
+          {
+            "name": "\ud83e\udd41 Eerie to Timpanies",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread eerie to timpanies.mp3"
+          },
+          {
+            "name": "\ud83c\udf2c\ufe0f Low Slow Woodwinds",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread low and slow woodwinds.mp3"
+          },
+          {
+            "name": "\ud83c\udfbb Low Slow Woodwinds & Strings",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread low slow woodwinds and strings.mp3"
+          },
+          {
+            "name": "\ud83d\udd2e Ondes Martenot Solo",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread ondes martenot.mp3"
+          },
+          {
+            "name": "\ud83e\udd41 Strings Timpany Shimmer",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread strings timpany shimmer short.mp3"
+          },
+          {
+            "name": "\ud83e\udd41 Timpany Shimmer Eerie 01",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread timpany shimmer Eerie 01.mp3"
+          },
+          {
+            "name": "\ud83d\udd2e Timpany Shimmer to Ondes Long",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread timpany shimmer toondes martenot long.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83c\udfbb Timpany to String Long Eerie 02",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread timpany to string long play Eerie 02.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83c\udf2c\ufe0f Woodwinds Low Shimmer",
+            "file": "sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread woodwinds low shimmer.mp3"
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Egon's Eureka",
+        "items": [
+          {
+            "name": "\ud83d\udca1 Flutes & Strings Pool",
+            "sub": "Random 01-02",
+            "pool": [
+              "sounds/Moods Music/Egon Eureka/Music Egon Eureka flutes.mp3",
+              "sounds/Moods Music/Egon Eureka/Music Egon Eurika flutes strings.mp3"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Occult Mystery",
+        "items": [
+          {
+            "name": "\ud83d\udd2e Brassy Intro to Flute Twinkle",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery Brassy intro to flute twinkle.mp3"
+          },
+          {
+            "name": "\ud83c\udfb9 Idle Piano Tinkle Super Long",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery Idle piano tinkle super long.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83d\udd2e Tonal Spooky Loop",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery Tonal spooky Loop.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83d\udd2e Big Brass Dreamland 4",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery big brass intro to dreamland 4.mp3"
+          },
+          {
+            "name": "\ud83d\udd2e Brass & Woodwinds Dreamland",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery brass and woodwinds dreamland.mp3"
+          },
+          {
+            "name": "\ud83d\udd2e Flutes to Ondes Dreamland 2",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery flutes to ondes marteno dreamland 2.mp3"
+          },
+          {
+            "name": "\ud83d\udd2e Ondes Marteno Eerie Short",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery ondes marteno Eerie short.mp3"
+          },
+          {
+            "name": "\ud83d\udd2e Ondes Marteno Short",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery ondes marteno short.mp3"
+          },
+          {
+            "name": "\ud83d\udd2e Ondes Marteno to Stings Long",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery ondes marteno to stings long play.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83d\udd2e Ondes Marteno to Woodwinds Long",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery ondes marteno to woodwinds long play.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83d\udd2e Ondes Marteno Twinkly Strings",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery ondes marteno twinkly strings.mp3"
+          },
+          {
+            "name": "\ud83d\udd2e Ondes Marteno Idle Super Long",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery ondes martenoIdle super long.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83d\udd2e Ondes Martenot Solo Very Short",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery ondes martenot solo very short.mp3"
+          },
+          {
+            "name": "\ud83c\udfb9 Piano Tinkle Solo Very Short",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery piano tinkle solo very short.mp3"
+          },
+          {
+            "name": "\ud83d\udd2e Stings Brass to Ondes Long",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery stings brass to ondes marteno long play.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83d\udd2e Stings Woodwinds Eerie Short",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery stings woodwinds Eerie short.mp3"
+          },
+          {
+            "name": "\ud83c\udfbb String Medium Reveal",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery string medium reveal.mp3"
+          },
+          {
+            "name": "\ud83c\udfbb Strings & Brass Shimmering Build",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery strings and brass Shimmering Build to reveal.mp3"
+          },
+          {
+            "name": "\ud83c\udfbb Strings to Brass Long",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery strings to brass long.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83c\udfbb Strings to Brass Low",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery strings to brass low.mp3"
+          },
+          {
+            "name": "\ud83c\udfbb Strings to Brass Reveal Short",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery strings to brass reveal short.mp3"
+          },
+          {
+            "name": "\ud83d\udd2e Strings to Ondes Marteno Long",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery strings to ondes marteno long play.mp3",
+            "loop": true
+          },
+          {
+            "name": "\ud83e\udde9 Strings to Ondes Puzzles",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery strings to ondes marteno puzzles.mp3"
+          },
+          {
+            "name": "\ud83c\udf2c\ufe0f Strings to Woodwinds Short",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery strings to woodwinds short.mp3"
+          },
+          {
+            "name": "\ud83c\udf2c\ufe0f Woodwinds Building Dread",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occult Mystery woodwinds Building Dread.mp3"
+          },
+          {
+            "name": "\ud83d\udd14 Ondes Marteno Bells Twinkle",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occulty Mystery ondes marteno bells twinkle.mp3"
+          },
+          {
+            "name": "\ud83d\udd2e Ondes Full Orchestra Dreamland 3",
+            "file": "sounds/Moods Music/Occult Mystery/Music Occulty Mystery ondes marteno full orchestra dreamland 3.mp3"
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Sad & Dirge",
+        "items": [
+          {
+            "name": "\ud83e\udd40 Strings & Horns Dirge",
+            "file": "sounds/Moods Music/Sad/Music Sad string and horns dirge.mp3"
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Orchestral Stingers",
+        "items": [
+          {
+            "name": "\u26a1 Symphonic Stingers Pool",
+            "sub": "50+ Orchestral Stingers",
+            "pool": [
+              "sounds/Moods Music/Stingers/Music Stinger 01.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 02.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 03.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 04.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 05.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 06.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 07.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 08.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 09.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 10.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 11.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 12.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 13.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 14.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 15.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 16.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 17.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 18.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 19.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 20.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 21.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 22.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 23.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 24.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 25.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 26.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 27.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 28.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 29.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 30.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 40.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 41.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 42.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 43.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 44.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 45.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 46.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 47.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 48.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 49.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 50.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 51.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 52.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 53.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 57.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 58.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 59.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 60.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 61.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 62.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 63.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 64.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 65.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger 66.mp3"
+            ]
+          },
+          {
+            "name": "\ud83e\udd88 Big Brass & Strings into Jaws",
+            "file": "sounds/Moods Music/Stingers/Music Stinger Big brass and strings into Jaws.mp3"
+          },
+          {
+            "name": "\ud83c\udfba Brass Swelling Reveal",
+            "file": "sounds/Moods Music/Stingers/Music Stinger brass swelling reveal.mp3"
+          },
+          {
+            "name": "\u2694\ufe0f Fight Intro Stinger Pool",
+            "sub": "Random 1-2",
+            "pool": [
+              "sounds/Moods Music/Stingers/Music Stinger fight intro 1.mp3",
+              "sounds/Moods Music/Stingers/Music Stinger fight intro 2.mp3"
+            ]
+          },
+          {
+            "name": "\ud83c\udfba Horns Sustained Wahhs",
+            "file": "sounds/Moods Music/Stingers/Music Stinger horns Sustained Wahhs.mp3"
+          },
+          {
+            "name": "\ud83c\udfba Horns Reveal Stinger",
+            "file": "sounds/Moods Music/Stingers/Music Stinger horns reveal.mp3"
+          },
+          {
+            "name": "\ud83c\udf92 Venkman Down Tension",
+            "file": "sounds/Moods Music/Stingers/Music Stinger tension building Venkman Down.mp3"
+          },
+          {
+            "name": "\ud83e\udd88 Stinging Brass Ondes to Jaws",
+            "file": "sounds/Moods Music/Stingers/Music Stinging brass ondes marteno to Jaws-ish.mp3"
+          }
+        ]
+      },
+      {
+        "name": "\ud83d\udcc1 Tense Focus",
+        "items": [
+          {
+            "name": "\ud83c\udfba Horns Cymbals Reveal Suspense",
+            "file": "sounds/Moods Music/Tense Focus/Music Tense Focus Horns Cymbals Reveal to Suspense.mp3"
+          },
+          {
+            "name": "\ud83c\udf92 Venkman Down Focus",
+            "file": "sounds/Moods Music/Tense Focus/Music Tense Focus Venkman Down.mp3"
+          },
+          {
+            "name": "\ud83c\udfbb Bees Nest Strings",
+            "file": "sounds/Moods Music/Tense Focus/Music Tense Focus bees nest strings.mp3"
+          },
+          {
+            "name": "\ud83e\udd41 Determined Gallop Timpany",
+            "file": "sounds/Moods Music/Tense Focus/Music Tense Focus detemined gallop Timpany and Horns.mp3"
+          },
+          {
+            "name": "\ud83c\udf2c\ufe0f Determined Walk Woodwinds",
+            "file": "sounds/Moods Music/Tense Focus/Music Tense Focus determined walk woodwinds.mp3"
+          },
+          {
+            "name": "\ud83c\udfb9 Electronic Low Hopeful",
+            "file": "sounds/Moods Music/Tense Focus/Music Tense Focus electronic low hopeful.mp3"
+          },
+          {
+            "name": "\ud83c\udfbb Pensive Strings Focus",
+            "file": "sounds/Moods Music/Tense Focus/Music Tense Focus pensive strings.mp3"
+          },
+          {
+            "name": "\ud83c\udfb7 Pulsing Electro Tuba Walk",
+            "file": "sounds/Moods Music/Tense Focus/Music Tense Focus pulsing suspense building Electro Tuba Walk.mp3"
+          },
+          {
+            "name": "\ud83c\udfc6 Spooky Building to Triumph 06",
+            "file": "sounds/Moods Music/Tense Focus/Music Tense Focus spooky building to triumph 06.mp3"
+          },
+          {
+            "name": "\ud83c\udfb9 Tentative Tuba Walk to Piano",
+            "file": "sounds/Moods Music/Tense Focus/Music Tense Focus tenative Tuba walk to piano.mp3"
+          },
+          {
+            "name": "\ud83c\udfba Tiptoe Horns",
+            "file": "sounds/Moods Music/Tense Focus/Music Tense Focus tiptoe horns.mp3"
+          }
+        ]
+      }
+    ]
+  }
+};
+
     let masterVol = 0.8;
     const activeAudios = {};
 
-    // Defined Pools mapped to your exact folder structure
-    const pools = {
-      protonStream: [
-        'sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_1.mp3',
-        'sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_2.mp3',
-        'sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_3.mp3',
-        'sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_5.mp3',
-        'sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_6.mp3',
-        'sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_7.mp3',
-        'sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_8.mp3',
-        'sounds/Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_9.mp3'
-      ],
-      tubaWalk: [
-        'sounds/Moods Music/Comedic Relief/Music Comedic Relief Slow Tuba Walk 14.mp3',
-        'sounds/Moods Music/Comedic Relief/Music Comedic Relief Stinger Tuba Walk 02.mp3',
-        'sounds/Moods Music/Comedic Relief/Music Comedic Relief Tuba Walk Strings Short and fast.mp3'
-      ],
-      creepingDread: [
-        'sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Piano Walk Slow.mp3',
-        'sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread Elevator Musak tape broken.mp3',
-        'sounds/Moods Music/Creeping Dread Eerie/Music Creeping Dread low and slow woodwinds.mp3'
-      ],
-      fightLoop: [
-        'sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 01.mp3',
-        'sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 02.mp3',
-        'sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 03.mp3',
-        'sounds/Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 04.mp3'
-      ]
-    };
-
     function safeUrl(relativePath) {
-      // Safely encodes each directory segment (converting spaces to %20 and & to %26)
       return relativePath.split('/').map(segment => encodeURIComponent(segment)).join('/');
-    }
-
-    function tab(event, id) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      event.target.classList.add('active');
-      document.getElementById(id).classList.add('active');
     }
 
     function setVol(v) {
@@ -393,10 +1381,10 @@
         if (activeAudios[k]) { activeAudios[k].pause(); activeAudios[k] = null; }
       });
       document.querySelectorAll('.tile').forEach(t => t.classList.remove('playing'));
-      document.getElementById('rand-status').innerText = "All active frequencies quieted.";
+      document.getElementById('status').innerText = "All active frequencies silenced.";
     }
 
-    function playFile(el, path, loop = false) {
+    function playAudio(el, path, loop = false) {
       if (activeAudios[path]) {
         activeAudios[path].pause();
         activeAudios[path] = null;
@@ -421,19 +1409,94 @@
         console.error("Playback error:", e);
         if (el) el.classList.remove('playing');
         activeAudios[path] = null;
-        document.getElementById('rand-status').innerText = "❌ Missing file: " + path.split('/').pop();
+        document.getElementById('status').innerText = "❌ File Error: " + path.split('/').pop();
       });
     }
 
-    function playRandom(poolName) {
-      const list = pools[poolName];
-      if (!list || !list.length) return;
-      const path = list[Math.floor(Math.random() * list.length)];
-      const trackName = path.split('/').pop().replace('.mp3', '');
-      
-      document.getElementById('rand-status').innerText = "🎯 Fired: " + trackName;
-      playFile(null, path, false);
+    function playPool(el, pool, name) {
+      if (!pool || !pool.length) return;
+      const path = pool[Math.floor(Math.random() * pool.length)];
+      const fileName = path.split('/').pop().replace('.mp3', '');
+      document.getElementById('status').innerText = "🎯 " + name + " Fired: " + fileName;
+      playAudio(el, path, false);
     }
+
+    function renderBoard() {
+      const tabContainer = document.getElementById('tabContainer');
+      const panelContainer = document.getElementById('panelContainer');
+
+      let isFirst = true;
+      Object.keys(SOUND_DATABASE).forEach(catKey => {
+        const cat = SOUND_DATABASE[catKey];
+        
+        // Render Tab Button
+        const tabBtn = document.createElement('button');
+        tabBtn.className = 'tab-btn' + (isFirst ? ' active' : '');
+        tabBtn.innerText = cat.title;
+        tabBtn.onclick = (e) => switchTab(e, 'panel-' + catKey);
+        tabContainer.appendChild(tabBtn);
+
+        // Render Panel
+        const panel = document.createElement('div');
+        panel.id = 'panel-' + catKey;
+        panel.className = 'panel' + (isFirst ? ' active' : '');
+
+        cat.subcategories.forEach(sub => {
+          const subTitle = document.createElement('div');
+          subTitle.className = 'subcategory-title';
+          subTitle.innerText = sub.name;
+          panel.appendChild(subTitle);
+
+          const grid = document.createElement('div');
+          grid.className = 'grid';
+
+          sub.items.forEach(item => {
+            const tile = document.createElement('div');
+            tile.className = 'tile';
+
+            const tileName = document.createElement('span');
+            tileName.className = 'tile-name';
+            tileName.innerText = item.name;
+            tile.appendChild(tileName);
+
+            if (item.sub) {
+              const tileSub = document.createElement('span');
+              tileSub.className = 'tile-sub';
+              tileSub.innerText = item.sub;
+              tile.appendChild(tileSub);
+            } else if (item.loop) {
+              const loopBadge = document.createElement('span');
+              loopBadge.className = 'loop-badge';
+              loopBadge.innerText = '🔄 Loop';
+              tile.appendChild(loopBadge);
+            }
+
+            if (item.pool) {
+              tile.onclick = () => playPool(tile, item.pool, item.name);
+            } else {
+              tile.onclick = () => playAudio(tile, item.file, item.loop || false);
+            }
+
+            grid.appendChild(tile);
+          });
+
+          panel.appendChild(grid);
+        });
+
+        panelContainer.appendChild(panel);
+        isFirst = false;
+      });
+    }
+
+    function switchTab(e, panelId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      e.target.classList.add('active');
+      document.getElementById(panelId).classList.add('active');
+    }
+
+    // Build the dynamic UI on page load
+    renderBoard();
   </script>
 </body>
 </html>

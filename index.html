@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ghostbusters Tactical Soundboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #121212;
+      --panel: #1e1e1e;
+      --red: #e21c24;
+      --red-hover: #b91c1c;
+      --slime: #39ff14;
+      --text: #f3f4f6;
+      --text-dim: #9ca3af;
+      --border: #2e2e2e;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 10px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      user-select: none;
+    }
+
+    /* Master Bar */
+    .master-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .title {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .vol-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+    input[type="range"] {
+      width: 80px;
+      accent-color: var(--red);
+    }
+    .btn-stop {
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .btn-stop:hover { background: var(--red-hover); }
+
+    /* Category Tabs */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 2px;
+      margin-bottom: 10px;
+    }
+    .tab-btn {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: 4px 4px 0 0;
+      color: var(--text-dim);
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      color: var(--slime);
+      box-shadow: inset 0 2px 0 var(--slime);
+      background: #252525;
+    }
+
+    /* Panels & Decks */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 8px;
+    }
+
+    .tile {
+      background: #222225;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 8px 6px;
+      min-height: 58px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+    }
+    .tile:hover { background: #2a2a2e; border-color: #444; }
+    .tile-name { font-size: 0.7rem; font-weight: bold; }
+    .tile-sub { font-size: 0.55rem; color: var(--text-dim); text-transform: uppercase; margin-top: 3px; }
+
+    .tile.playing {
+      border-color: var(--slime);
+      background: #14280f;
+    }
+    .tile.playing .tile-name { color: var(--slime); }
+
+    .random-box {
+      text-align: center;
+      padding: 15px 0;
+    }
+    .btn-giant {
+      background: var(--red);
+      color: #fff;
+      border: 2px solid #b91c1c;
+      border-radius: 50%;
+      width: 90px;
+      height: 90px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin: 0 auto 10px auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .btn-giant:hover { transform: scale(1.04); background: #ff2b34; }
+    .btn-giant span { font-size: 1.4rem; margin-bottom: 2px; }
+    .status { font-size: 0.75rem; color: var(--slime); font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div class="master-bar">
+    <div class="title">🚫 GB Tactical Audio</div>
+    <div class="controls">
+      <div class="vol-box">
+        <span>🔇</span>
+        <input type="range" id="vol" min="0" max="1" step="0.05" value="0.8" oninput="setVol(this.value)">
+        <span>🔊</span>
+      </div>
+      <button class="btn-stop" onclick="stopAll()">🛑 Stop All</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="tab('tab-rand')">🎲 Random Pools</button>
+    <button class="tab-btn" onclick="tab('tab-arms')">📞 Call to Arms</button>
+    <button class="tab-btn" onclick="tab('tab-invest')">📟 Investigation</button>
+    <button class="tab-btn" onclick="tab('tab-combat')">⚡ Combat</button>
+    <button class="tab-btn" onclick="tab('tab-meta')">🎲 Meta Game</button>
+    <button class="tab-btn" onclick="tab('tab-moods')">🎭 Moods</button>
+  </div>
+
+  <!-- Randomizer Pool Tab -->
+  <div id="tab-rand" class="panel active">
+    <div class="random-box">
+      <button class="btn-giant" onclick="playRandom('stingers')">
+        <span>⚡</span>Stinger<br>Roll
+      </button>
+      <div class="status" id="rand-status">Ready for action</div>
+    </div>
+    <div class="grid">
+      <div class="tile" onclick="playRandom('protonStream')">
+        <span class="tile-name">⚡ Fire Beam</span>
+        <span class="tile-sub">Random Grain 1-9</span>
+      </div>
+      <div class="tile" onclick="playRandom('tubaWalk')">
+        <span class="tile-name">🎷 Comedic Fail</span>
+        <span class="tile-sub">Random Tuba Walk</span>
+      </div>
+      <div class="tile" onclick="playRandom('creepingDread')">
+        <span class="tile-name">👁️ Creeping Dread</span>
+        <span class="tile-sub">Random Eerie Cue</span>
+      </div>
+      <div class="tile" onclick="playRandom('fightLoop')">
+        <span class="tile-name">⚔️ Combat Music</span>
+        <span class="tile-sub">Random Battle Loop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Arms Tab -->
+  <div id="tab-arms" class="panel">
+    <div class="grid">
+      <div class="tile" onclick="playFile(this, 'Call to Arms SFX/Call_to_Arms_Firehouse_Alarm_14.mp3')">
+        <span class="tile-name">🚨 Firehouse Alarm</span>
+        <span class="tile-sub">Alarm</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Call to Arms SFX/Call_to_Arms_Ecto_1_Siren Start & 30sec.mp3')">
+        <span class="tile-name">🚨 Ecto-1 Siren Start</span>
+        <span class="tile-sub">30s Siren</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Call to Arms SFX/Call_to_Arms_Ecto_1_Approach &_Stop.mp3')">
+        <span class="tile-name">🚨 Ecto-1 Arrival</span>
+        <span class="tile-sub">Stop & Hiss</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Call to Arms SFX/Call_to_Arms_Commercial_Jingle.mp3', true)">
+        <span class="tile-name">📺 TV Commercial</span>
+        <span class="tile-sub">Jingle Loop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Investigation Tab -->
+  <div id="tab-invest" class="panel">
+    <div class="grid">
+      <div class="tile" onclick="playFile(this, 'Investigation SFX/PKE/Investigation_PKE_Chirp_Loop.mp3', true)">
+        <span class="tile-name">📟 P.K.E. Chirp</span>
+        <span class="tile-sub">Scanner Loop</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Investigation SFX/PKE/Investigation_PKE_Target_Scan_Found.mp3')">
+        <span class="tile-name">📟 Target Acquired</span>
+        <span class="tile-sub">PKE Lock</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Investigation SFX/Goggles/Investigation_Ecto_Goggles_Whine_Exist.mp3', true)">
+        <span class="tile-name">🕶️ Goggles Whine</span>
+        <span class="tile-sub">Vision Loop</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Investigation SFX/Investigation_Cold_Spot_Whoosh.mp3')">
+        <span class="tile-name">🌬️ Cold Spot</span>
+        <span class="tile-sub">Whoosh</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Investigation SFX/Firehouse Computer/Investigation_Firehouse_Computer_1.mp3')">
+        <span class="tile-name">🖥️ Computer Data</span>
+        <span class="tile-sub">Terminal</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Combat Tab -->
+  <div id="tab-combat" class="panel">
+    <div class="grid">
+      <div class="tile" onclick="playFile(this, 'Combat & Containment SFX/Proton Pack/Proton_Pack_Power_On.mp3')">
+        <span class="tile-name">🎒 Pack Power On</span>
+        <span class="tile-sub">Startup</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Combat & Containment SFX/Proton Pack/Proton_Pack_Overheat_Vent.mp3')">
+        <span class="tile-name">🎒 Pack Overheat</span>
+        <span class="tile-sub">Vent Steam</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Combat & Containment SFX/Traps/Traps_Throw_Slide.mp3')">
+        <span class="tile-name">🏺 Trap Throw</span>
+        <span class="tile-sub">Deploy</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Combat & Containment SFX/Traps/Traps_Suction_Vortex_Loop.mp3', true)">
+        <span class="tile-name">🌀 Suction Vortex</span>
+        <span class="tile-sub">Pulling Loop</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Combat & Containment SFX/Traps/Traps_Snap_and_Beep.mp3')">
+        <span class="tile-name">🔒 Trap Snap</span>
+        <span class="tile-sub">Captured!</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Combat & Containment SFX/Slime/Slime_Blower_Squelch_Splat_1.mp3')">
+        <span class="tile-name">🧪 Slime Splat</span>
+        <span class="tile-sub">Squelch</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Combat & Containment SFX/Slime/Slime_Blower_Chug_Fire_Loop.mp3', true)">
+        <span class="tile-name">🧪 Slime Blower</span>
+        <span class="tile-sub">Chug Loop</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Combat & Containment SFX/Containment/Containment_Grid_Hum_Underground_Loop.mp3', true)">
+        <span class="tile-name">🔋 Containment Hum</span>
+        <span class="tile-sub">Vault Loop</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Combat & Containment SFX/Containment/Containment_Breach_Explosion.mp3')">
+        <span class="tile-name">💥 Vault Breach</span>
+        <span class="tile-sub">Explosion</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meta Game Tab -->
+  <div id="tab-meta" class="panel">
+    <div class="grid">
+      <div class="tile" onclick="playFile(this, 'Meta Game Music SFX/Meta_Joker_Dealt (Jackpot!).mp3')">
+        <span class="tile-name">🎰 Joker Jackpot</span>
+        <span class="tile-sub">Wild Card</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Meta Game Music SFX/Meta_Benny_Spent.mp3')">
+        <span class="tile-name">💎 Benny Spend</span>
+        <span class="tile-sub">Reroll</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Meta Game Music SFX/Meta_Shaken_Stunned.mp3')">
+        <span class="tile-name">🥴 Shaken / Stunned</span>
+        <span class="tile-sub">Stinger</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Meta Game Music SFX/Meta_Walkie_Talkie_Chirp-Click.mp3')">
+        <span class="tile-name">📻 Walkie Talkie</span>
+        <span class="tile-sub">Chirp-Click</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Meta Game Music SFX/Meta_Wilhelm_Scream.mp3')">
+        <span class="tile-name">😱 Wilhelm Scream</span>
+        <span class="tile-sub">Classic</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Meta Game Music SFX/Meta_Proton_Pack_Power-Down_Cold_Out.mp3')">
+        <span class="tile-name">🎒 Pack Cold Out</span>
+        <span class="tile-sub">Power Down</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Moods Tab -->
+  <div id="tab-moods" class="panel">
+    <div class="grid">
+      <div class="tile" onclick="playFile(this, 'Moods Music/Egon Eureka/Music Egon Eureka flutes.mp3')">
+        <span class="tile-name">💡 Egon's Eureka</span>
+        <span class="tile-sub">Breakthrough</span>
+      </div>
+      <div class="tile" onclick="playFile(this, 'Moods Music/Bureacritic Buzz/Music Bureacritic Buzz Piano Wald to Tuba Walk.mp3', true)">
+        <span class="tile-name">🐝 Walter Peck Buzz</span>
+        <span class="tile-sub">Bureaucracy</span>
+      </div>
+      <div class="tile" onclick="playRandom('fightLoop')">
+        <span class="tile-name">⚔️ Chaotic Battle</span>
+        <span class="tile-sub">Random Fight Loop</span>
+      </div>
+      <div class="tile" onclick="playRandom('creepingDread')">
+        <span class="tile-name">🕵️ Creeping Dread</span>
+        <span class="tile-sub">Random Mystery</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let masterVol = 0.8;
+    const activeAudios = {};
+
+    // Defined Pools from your uploaded folder structure
+    const pools = {
+      protonStream: [
+        'Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_1.mp3',
+        'Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_2.mp3',
+        'Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_3.mp3',
+        'Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_4.mp3',
+        'Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_5.mp3',
+        'Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_6.mp3',
+        'Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_7.mp3',
+        'Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_8.mp3',
+        'Combat & Containment SFX/Proton Pack/Proton_Beam_Fire_Local_Grain_9.mp3'
+      ],
+      tubaWalk: [
+        'Moods Music/Comedic Relief/Music Comedic Relief Slow Tuba Walk 14.mp3',
+        'Moods Music/Comedic Relief/Music Comedic Relief Stinger Tuba Walk 02.mp3',
+        'Moods Music/Comedic Relief/Music Comedic Relief Tuba Walk Strings Short and fast.mp3'
+      ],
+      creepingDread: [
+        'Moods Music/Creeping Dread Eerie/Music Creeping Dread Eerie Amb Library Loop.mp3',
+        'Moods Music/Creeping Dread Eerie/Music Creeping Dread Eerie Amb Tonal Cem Underground Loop.mp3',
+        'Moods Music/Occult Mystery/Music Occult Mystery 13thfloor Mirror Reveal Mid.mp3'
+      ],
+      fightLoop: [
+        'Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 01.mp3',
+        'Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 02.mp3',
+        'Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 03.mp3',
+        'Moods Music/Chaotic Kenetic/Music Chatoic Kinetic Fight Loop 04.mp3'
+      ],
+      stingers: []
+    };
+
+    // Populate 50+ stingers dynamically
+    for (let i = 1; i <= 57; i++) {
+      let num = i < 10 ? '0' + i : i;
+      pools.stingers.push(`Moods Music/Stingers/Music Moods Stingers Stinger ${num}.mp3`);
+      pools.stingers.push(`Moods Music/Stingers/Music Moods Stingers Stinger ${num}a.mp3`);
+      pools.stingers.push(`Moods Music/Stingers/Music Moods Stingers Stinger ${num}b.mp3`);
+    }
+
+    function tab(id) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById(id).classList.add('active');
+    }
+
+    function setVol(v) {
+      masterVol = parseFloat(v);
+      Object.values(activeAudios).forEach(a => { if (a) a.volume = masterVol; });
+    }
+
+    function stopAll() {
+      Object.keys(activeAudios).forEach(k => {
+        if (activeAudios[k]) { activeAudios[k].pause(); activeAudios[k] = null; }
+      });
+      document.querySelectorAll('.tile').forEach(t => t.classList.remove('playing'));
+      document.getElementById('rand-status').innerText = "All audio silenced.";
+    }
+
+    function playFile(el, path, loop = false) {
+      if (activeAudios[path]) {
+        activeAudios[path].pause();
+        activeAudios[path] = null;
+        if (el) el.classList.remove('playing');
+        return;
+      }
+
+      const audio = new Audio(encodeURI(path));
+      audio.volume = masterVol;
+      audio.loop = loop;
+      audio.onended = () => {
+        if (!audio.loop) {
+          activeAudios[path] = null;
+          if (el) el.classList.remove('playing');
+        }
+      };
+
+      activeAudios[path] = audio;
+      if (el) el.classList.add('playing');
+      audio.play().catch(e => console.error("Playback error:", e));
+    }
+
+    function playRandom(poolName) {
+      const list = pools[poolName];
+      if (!list || !list.length) return;
+      const path = list[Math.floor(Math.random() * list.length)];
+      const trackName = path.split('/').pop().replace('.mp3', '');
+      
+      document.getElementById('rand-status').innerText = "🎯 Fired: " + trackName;
+      playFile(null, path, false);
+    }
+  </script>
+</body>
+</html>
+Step 3: Embed in TiddlyWiki
+Once GitHub Pages completes the build (usually within 60 seconds), test your custom web soundboard directly in your browser at https://angrystatic.github.io/gb-soundboard/.
+Then, in your TiddlyWiki, edit your ⚡ Ghostly Stingers (or 🚫 Audio Deck) tiddler and replace its content with this iframe:
+<div style="background: #121212; padding: 4px; border: 1px solid #2e2e2e; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); max-width: 360px; margin: 0 auto;">
+  <iframe src="https://angrystatic.github.io/gb-soundboard/" 
+          style="width: 100%; height: 460px; border: none; background: #121212; overflow-y: auto;" 
+          scrolling="yes" 
+          allow="autoplay">
+  </iframe>
+</div>
